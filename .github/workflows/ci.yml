@@ -11,22 +11,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout code
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Step 2: Build Docker image (Maven runs INSIDE Docker)
       - name: Build Docker image
-        run: docker build -t aqi-app:latest .
+        run: docker build -t aqi-app:latest ./AQI_Prediction_Project
 
-      # Step 3: Run container and show output
       - name: Run Docker container
         run: |
           docker run --name aqi-container -d aqi-app:latest
           sleep 5
           docker logs aqi-container
 
-      # Step 4: Cleanup
       - name: Cleanup
         run: |
           docker stop aqi-container
