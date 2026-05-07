@@ -1,0 +1,33 @@
+name: AQI CI Pipeline
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout code
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 2: Build Docker image (Maven runs INSIDE Docker)
+      - name: Build Docker image
+        run: docker build -t aqi-app:latest .
+
+      # Step 3: Run container and show output
+      - name: Run Docker container
+        run: |
+          docker run --name aqi-container -d aqi-app:latest
+          sleep 5
+          docker logs aqi-container
+
+      # Step 4: Cleanup
+      - name: Cleanup
+        run: |
+          docker stop aqi-container
+          docker rm aqi-container
