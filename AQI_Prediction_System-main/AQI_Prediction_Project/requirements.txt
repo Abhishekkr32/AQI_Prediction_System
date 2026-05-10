@@ -9,3 +9,4 @@ streamlit-folium
 joblib
 plotly
 docker
+# live demo
