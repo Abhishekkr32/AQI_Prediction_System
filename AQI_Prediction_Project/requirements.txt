@@ -8,5 +8,3 @@ folium
 streamlit-folium
 joblib
 plotly
-demo
-demo.txt
